@@ -12,7 +12,7 @@ namespace tempnuker
     {
         static DirectoryLayoutMode _currentMode = (DirectoryLayoutMode)Enum.Parse(typeof(DirectoryLayoutMode), Environment.OSVersion.Version.Major.ToString(), true);
         static string _rootUserProfilePath = string.Empty;
-        static List<string> _pathSubsToClean = new List<string>();
+        static readonly List<string> _pathSubsToClean = new List<string>();
         static string _logFileName = "tempnuker.log";
         static TextWriter _textWriter;
         static bool _includeDefaultTempLocations;
@@ -200,7 +200,7 @@ namespace tempnuker
 
         private static void SetFileAttributes(FileInfo file)
         {
-            file.Attributes = file.Attributes & ~(FileAttributes.System | FileAttributes.Hidden | FileAttributes.ReadOnly);
+            file.Attributes &= ~(FileAttributes.System | FileAttributes.Hidden | FileAttributes.ReadOnly);
         }
 
         private static void DoDeleteFile(FileInfo subFile)

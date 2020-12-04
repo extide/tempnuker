@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace tempnuker
 {
     public struct FileSize : IFormattable
     {
-        private ulong _value;
+        private readonly ulong _value;
 
         private const int DEFAULT_PRECISION = 2;
 
-        private static IList<string> Units;
+        private static readonly IList<string> Units;
 
         static FileSize()
         {
@@ -41,11 +40,9 @@ namespace tempnuker
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            int precision;
-
             if (String.IsNullOrEmpty(format))
                 return ToString(DEFAULT_PRECISION);
-            else if (int.TryParse(format, out precision))
+            else if (int.TryParse(format, out int precision))
                 return ToString(precision);
             else
                 return _value.ToString(format, formatProvider);
